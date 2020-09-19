@@ -4,14 +4,17 @@ const minsEl = document.getElementById('mins');
 const secondsEl = document.getElementById('seconds');
 const quoteEl = document.getElementById('quote');
 
-const api_url = 'http://quotes.stormconsultancy.co.uk/random.json';
+const api_url = 'https://type.fit/api/quotes';
 
 async function getData(){
+
     const response = await fetch(api_url);
     const data = await response.json();
-    
-    var auth = data.author;
-    var content = data.quote+"<footer align=right>-"+auth+"</footer>";
+    var mx =  data.length;
+    var rand = Math.floor(Math.random() * mx);
+    console.log(data.length);
+    var auth = data[rand].author;
+    var content = data[rand].text+"<footer align=right>-"+auth+"</footer>";
     quoteEl.innerHTML = content;
 }
 getData();
