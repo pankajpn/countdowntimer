@@ -2,11 +2,26 @@ const daysEl =  document.getElementById('days');
 const hoursEl = document.getElementById('hours');
 const minsEl = document.getElementById('mins');
 const secondsEl = document.getElementById('seconds');
+const quoteEl = document.getElementById('quote');
+
+const api_url = 'http://quotes.stormconsultancy.co.uk/random.json';
+
+async function getData(){
+    const response = await fetch(api_url);
+    const data = await response.json();
+    
+    var auth = data.author;
+    var content = data.quote+"<footer align=right>-"+auth+"</footer>";
+    quoteEl.innerHTML = content;
+}
+getData();
+setInterval(getData,30000);
 
 
 futureDate = null;
 function f(){
     futureDate = document.getElementById("myDate").value;
+    countdown();
     setInterval(countdown, 1000);
 }
 function countdown(){
@@ -14,7 +29,7 @@ function countdown(){
     const newfutureDate = new Date(futureDate);
     const currentDate = new Date();
 
-    const totseconds = (newfutureDate - currentDate)/1000;
+    const totseconds = (newfutureDate - currentDate - 19800000)/1000;
 
     const days = Math.floor(totseconds/3600/24);
     const hours = Math.floor(totseconds/3600)%24;
